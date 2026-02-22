@@ -42,7 +42,7 @@
 * updated build actions ([1e65fdd](https://github.com/AlexsJones/llmfit/commit/1e65fddecb5f183870ddf1aa865dcaddba47523a))
 * updated images ([9141109](https://github.com/AlexsJones/llmfit/commit/9141109f753ef38eb2b2eb5c604edb6ee0d7e371))
 * updated models ([2d6c1d6](https://github.com/AlexsJones/llmfit/commit/2d6c1d66708186c0a21cb2f082a5b4e2fb03db90))
-* updated tui to support multiple providers better and also multiple GPU suppor ([a3ca0bd](https://github.com/AlexsJones/llmfit/commit/a3ca0bd64647fa958c15bb7038a9e02df175fe67))
+* updated tui to support multiple providers better and also multiple GPU support ([a3ca0bd](https://github.com/AlexsJones/llmfit/commit/a3ca0bd64647fa958c15bb7038a9e02df175fe67))
 * updated urls ([f75ec27](https://github.com/AlexsJones/llmfit/commit/f75ec2750f325ff73725e5b8b194ba854c8579e9))
 * updated version ([2cfc73e](https://github.com/AlexsJones/llmfit/commit/2cfc73ebdb6214f801e32880ff6451b2809bbb45))
 
@@ -100,7 +100,7 @@
 * updated build actions ([1e65fdd](https://github.com/AlexsJones/llmfit/commit/1e65fddecb5f183870ddf1aa865dcaddba47523a))
 * updated images ([9141109](https://github.com/AlexsJones/llmfit/commit/9141109f753ef38eb2b2eb5c604edb6ee0d7e371))
 * updated models ([2d6c1d6](https://github.com/AlexsJones/llmfit/commit/2d6c1d66708186c0a21cb2f082a5b4e2fb03db90))
-* updated tui to support multiple providers better and also multiple GPU suppor ([a3ca0bd](https://github.com/AlexsJones/llmfit/commit/a3ca0bd64647fa958c15bb7038a9e02df175fe67))
+* updated tui to support multiple providers better and also multiple GPU support ([a3ca0bd](https://github.com/AlexsJones/llmfit/commit/a3ca0bd64647fa958c15bb7038a9e02df175fe67))
 * updated urls ([f75ec27](https://github.com/AlexsJones/llmfit/commit/f75ec2750f325ff73725e5b8b194ba854c8579e9))
 * updated version ([2cfc73e](https://github.com/AlexsJones/llmfit/commit/2cfc73ebdb6214f801e32880ff6451b2809bbb45))
 
