@@ -177,6 +177,24 @@ impl SystemSpecs {
             }
         }
 
+        // NVIDIA Grace / DGX Spark unified memory SoCs (e.g. GB10, GB20).
+        // These share the full system RAM between CPU and GPU, like Apple Silicon.
+        // nvidia-smi may report 0 VRAM or a small dedicated portion, so we
+        // override with total system RAM and flag as unified memory.
+        let is_nvidia_unified = gpus.iter().any(|g| {
+            let lower = g.name.to_lowercase();
+            lower.contains("gb10") || lower.contains("gb20")
+        });
+        if is_nvidia_unified {
+            for gpu in &mut gpus {
+                let lower = gpu.name.to_lowercase();
+                if lower.contains("gb10") || lower.contains("gb20") {
+                    gpu.unified_memory = true;
+                    gpu.vram_gb = Some(total_ram_gb);
+                }
+            }
+        }
+
         // Intel Arc via sysfs
         if let Some(vram) = Self::detect_intel_gpu() {
             let already_found = gpus.iter().any(|g| g.name.to_lowercase().contains("intel"));
@@ -1202,6 +1220,13 @@ fn estimate_vram_from_name(name: &str) -> f64 {
     if lower.contains("t4") {
         return 16.0;
     }
+    // NVIDIA Grace / DGX Spark unified memory SoCs
+    if lower.contains("gb10") {
+        return 128.0;
+    }
+    if lower.contains("gb20") {
+        return 128.0;
+    }
     // AMD RX 9000 series (RDNA 4)
     if lower.contains("9070 xt") {
         return 16.0;
@@ -1353,5 +1378,24 @@ mod tests {
         assert_eq!(gpus.len(), 2);
         assert!(gpus.iter().any(|g| g.name.contains("4090") && g.count == 1));
         assert!(gpus.iter().any(|g| g.name.contains("4080") && g.count == 1));
+    }
+
+    #[test]
+    fn test_parse_nvidia_smi_gb10_gets_vram_estimate() {
+        // DGX Spark reports GB10 with 0 VRAM from nvidia-smi
+        let text = "0, NVIDIA GB10\n";
+        let gpus = SystemSpecs::parse_nvidia_smi_list(text);
+
+        assert_eq!(gpus.len(), 1);
+        assert!(gpus[0].name.contains("GB10"));
+        // estimate_vram_from_name should kick in and return 128GB
+        let vram = gpus[0].vram_gb.expect("GB10 should have estimated VRAM");
+        assert!(vram > 100.0, "GB10 VRAM should be ~128GB, got {vram}");
+    }
+
+    #[test]
+    fn test_estimate_vram_gb10() {
+        assert_eq!(super::estimate_vram_from_name("NVIDIA GB10"), 128.0);
+        assert_eq!(super::estimate_vram_from_name("NVIDIA GB20"), 128.0);
     }
 }
