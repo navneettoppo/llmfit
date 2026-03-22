@@ -132,6 +132,7 @@ fn handle_normal_mode(app: &mut App, key: KeyEvent) {
         KeyCode::Char('m') => app.mark_selected_for_compare(),
         KeyCode::Char('c') => app.toggle_compare_view(),
         KeyCode::Char('x') => app.clear_compare_mark(),
+        KeyCode::Char('y') => app.copy_selected_model_name(),
 
         _ => {}
     }
