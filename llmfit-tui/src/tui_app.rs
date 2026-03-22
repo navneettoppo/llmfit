@@ -778,6 +778,21 @@ impl App {
         self.pull_status = Some("Cleared compare mark".to_string());
     }
 
+    pub fn copy_selected_model_name(&mut self) {
+        let Some(fit) = self.selected_fit() else {
+            self.pull_status = Some("No model selected".to_string());
+            return;
+        };
+        let name = fit.model.name.clone();
+        match arboard::Clipboard::new() {
+            Ok(mut clipboard) => match clipboard.set_text(&name) {
+                Ok(()) => self.pull_status = Some(format!("Copied '{}' to clipboard", name)),
+                Err(e) => self.pull_status = Some(format!("Clipboard error: {}", e)),
+            },
+            Err(e) => self.pull_status = Some(format!("Clipboard error: {}", e)),
+        }
+    }
+
     pub fn selected_compare_pair(&self) -> Option<(&ModelFit, &ModelFit)> {
         let selected = self.selected_fit()?;
         let mark_name = self.compare_mark_model.as_deref()?;
