@@ -71,9 +71,7 @@ fn handle_normal_mode(app: &mut App, key: KeyEvent) {
         KeyCode::Down | KeyCode::Char('j') => app.move_down(),
         KeyCode::PageUp => app.page_up(),
         KeyCode::PageDown => app.page_down(),
-        KeyCode::Home | KeyCode::Char('g') => app.home(),
-        KeyCode::End | KeyCode::Char('G') => app.end(),
-
+        KeyCode::Home | KeyCode::Char('g') => app.cycle_top_bottom(),
         // Visual mode
         KeyCode::Char('v') => app.enter_visual_mode(),
 
@@ -176,8 +174,7 @@ fn handle_visual_mode(app: &mut App, key: KeyEvent) {
         KeyCode::Down | KeyCode::Char('j') => app.move_down(),
         KeyCode::PageUp => app.page_up(),
         KeyCode::PageDown => app.page_down(),
-        KeyCode::Home | KeyCode::Char('g') => app.home(),
-        KeyCode::End | KeyCode::Char('G') => app.end(),
+        KeyCode::Home | KeyCode::Char('g') => app.cycle_top_bottom(),
 
         // Mark all selected for compare
         KeyCode::Char('m') => app.mark_selected_for_compare(),
