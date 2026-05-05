@@ -29,6 +29,10 @@ pub struct PlanRequest {
     /// KV cache element representation. Defaults to fp16.
     #[serde(default)]
     pub kv_quant: Option<KvQuant>,
+    /// Optional global context cap (from --max-context / OLLAMA_CONTEXT_LENGTH).
+    /// When set, clamps `context` to this value for memory estimation.
+    #[serde(default)]
+    pub context_limit: Option<u32>,
 }
 
 #[derive(Debug, Clone, serde::Serialize)]
@@ -581,7 +585,11 @@ pub fn estimate_model_plan(
             .to_string());
     }
 
-    let context = request.context;
+    let context = if let Some(cap) = request.context_limit {
+        request.context.min(cap)
+    } else {
+        request.context
+    };
     let run_paths = vec![
         build_path_estimate(
             model,
