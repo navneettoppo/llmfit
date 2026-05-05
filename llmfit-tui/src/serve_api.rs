@@ -699,6 +699,7 @@ async fn plan_estimate(
         quant: body.quant,
         target_tps: body.target_tps,
         kv_quant,
+        context_limit: None,
     };
     let specs = effective_specs(&state.specs, &overrides)?;
 
