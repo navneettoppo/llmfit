@@ -1849,7 +1849,7 @@ impl ModelProvider for LmStudioProvider {
                         // installed models list to detect completion.
                         let candidates = hf_name_to_lmstudio_candidates(&model_tag_owned);
                         let poll_interval = std::time::Duration::from_secs(3);
-                        let max_polls = 600; // 30 minutes max
+                        let max_polls = 100; // 5 minutes max
 
                         let _ = tx.send(PullEvent::Progress {
                             status: "Downloading via LM Studio (tracking)...".to_string(),
@@ -1901,7 +1901,7 @@ impl ModelProvider for LmStudioProvider {
                         }
 
                         let _ =
-                            tx.send(PullEvent::Error("LM Studio download timed out".to_string()));
+                            tx.send(PullEvent::Error("LM Studio download timed out after 5 minutes".to_string()));
                     }
                 }
                 Err(e) => {
